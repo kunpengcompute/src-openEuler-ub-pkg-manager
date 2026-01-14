@@ -1,6 +1,6 @@
 %define config_file /etc/ub-pkg-manager/config.yml
 Name:           ub-pkg-manager
-Version:        0.0.1
+Version:        0.0.2
 Release:        1
 Summary:        The full function of UB OS Component
 
@@ -236,6 +236,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Wed Jan 14 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.2-1
+- Added UBRT ACPI table existence check, dual log printing for error fixes, and systemctl status error message viewing support
 * Tue Dec 16 2025 gongzhengtang <gong_zhengtang@163.com> - 0.0.1-1
 - Initial release
 - Split into four subpackages: ub-pkg-manager, ub-pkg-urma, ub-pkg-mem, ub-pkg-virt
