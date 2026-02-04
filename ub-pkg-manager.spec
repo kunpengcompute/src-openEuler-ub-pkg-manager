@@ -1,6 +1,5 @@
-%define config_file /etc/ub-pkg-manager/config.yml
 Name:           ub-pkg-manager
-Version:        0.0.2
+Version:        0.0.3
 Release:        1
 Summary:        The full function of UB OS Component
 
@@ -9,7 +8,7 @@ Source0:        %{name}-%{version}.tar.gz
 
 ExclusiveArch:  aarch64
 BuildRequires:  python3-setuptools
-Requires:       python3 >= 3.6
+Requires:       python3 >= 3.6 python3-rich python3-pydantic python3-pyyaml
 Requires:       systemd
 Requires:       ub-pkg-urma = %{version}-%{release}
 Requires:       ub-pkg-mem = %{version}-%{release}
@@ -21,7 +20,7 @@ The full function of UB OS Component
 # Subpackage: ub-pkg-urma
 %package -n ub-pkg-urma
 Summary:        The UnifiedBus Communication function software package management tool of UB OS Component
-Requires:       ubctl ubutils libummu libcdma umdk-ums umdk-ums-tools umdk-urma-lib umdk-urma-bin umdk-urpc-umq umdk-urma-tools
+Requires:       ubctl ubutils libummu libcdma umdk-urma-lib umdk-urma-bin umdk-urpc-umq umdk-urma-tools
 Requires:       umdk-dlock-lib umdk-urpc-framework umdk-urpc-framework-tools umdk-urpc-umq-devel umdk-urpc-umq-tools
 
 %description -n ub-pkg-urma
@@ -75,8 +74,8 @@ install -m 644 ub-pkg-urma.service %{buildroot}/usr/lib/systemd/system/
 install -m 644 ub-pkg-mem.service %{buildroot}/usr/lib/systemd/system/
 install -m 644 ub-pkg-virt.service %{buildroot}/usr/lib/systemd/system/
 
-# Install config file (will be handled specially in post scripts)
-install -m 644 config.yml %{buildroot}%{config_file}.bak
+# Install etc directory files to system location
+install -m 644 src/ub_manage/etc/check.yml %{buildroot}/etc/ub-pkg-manager/
 
 
 # Install scripts
@@ -99,16 +98,6 @@ install -m 755 src/ub_manage/scripts/03-ub-pkg-virt.sh %{buildroot}/usr/local/ub
 
 # Start main service
 /bin/systemctl start ub-pkg-manager.service 2>/dev/null || :
-
-# Handle config file
-if [ -f %{config_file} ]; then
-    # Config file exists, keep the new one as .bak
-    echo "Configuration file %{config_file} already exists, new version saved as %{config_file}.bak"
-else
-    # First time install, use the default config
-    mv %{config_file}.bak %{config_file}
-    echo "Installed default configuration to %{config_file}"
-fi
 
 %preun -n ub-pkg-manager
 if [ $1 -eq 0 ]; then
@@ -180,9 +169,21 @@ if [ $1 -ge 1 ]; then
     /bin/systemctl daemon-reload
 fi
 
-# Don't remove config file on uninstall, let user decide
+# Execute restore script and clean up on uninstall
 if [ $1 -eq 0 ]; then
-    echo "Configuration file %{config_file} has been preserved for your reference"
+    # Remove modprobe configuration file
+    if [ -f "/etc/modprobe.d/ub-pkg-manager.conf" ]; then
+        rm -f "/etc/modprobe.d/ub-pkg-manager.conf"
+        echo "Removed /etc/modprobe.d/ub-pkg-manager.conf"
+    fi
+    
+    # Remove the entire ub-pkg-manager directory if it's empty
+    if [ -d "/etc/ub-pkg-manager" ]; then
+        rmdir --ignore-fail-on-non-empty "/etc/ub-pkg-manager"
+        if [ ! -d "/etc/ub-pkg-manager" ]; then
+            echo "Removed /etc/ub-pkg-manager directory"
+        fi
+    fi
 fi
 
 # Subpackage: ub-pkg-urma post uninstall
@@ -210,10 +211,11 @@ fi
 %files
 %doc
 %{python3_sitelib}/ub_manage/
-%{python3_sitelib}/ub_pkg_manager-%{version}*.egg-info/
+%{python3_sitelib}/ub_pkg_manager-*.egg-info/
 %{_bindir}/ub-pkg-cli
 /usr/lib/systemd/system/ub-pkg-manager.service
-%config(noreplace) %{config_file}*
+%dir /etc/ub-pkg-manager
+%config(noreplace) /etc/ub-pkg-manager/check.yml
 /usr/local/ub-pkg-manager/bin/00-ub-pkg-manager.sh
 /usr/local/ub-pkg-manager/bin/ub-pkg-common.sh
 
@@ -236,6 +238,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Tues Feb 3 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.3-1
+- Added CLI tool, service validity check, and updated KO module configuration.
 * Wed Jan 14 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.2-1
 - Added UBRT ACPI table existence check, dual log printing for error fixes, and systemctl status error message viewing support
 * Tue Dec 16 2025 gongzhengtang <gong_zhengtang@163.com> - 0.0.1-1
