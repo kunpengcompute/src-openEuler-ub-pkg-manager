@@ -1,5 +1,5 @@
 Name:           ub-pkg-manager
-Version:        0.0.3
+Version:        0.0.4
 Release:        1
 Summary:        The full function of UB OS Component
 
@@ -238,6 +238,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Thur Feb 5 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-1
+- fix correct execution of lsmod and rpm -q commands
 * Tues Feb 3 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.3-1
 - Added CLI tool, service validity check, and updated KO module configuration.
 * Wed Jan 14 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.2-1
