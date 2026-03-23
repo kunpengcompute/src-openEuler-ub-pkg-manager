@@ -1,6 +1,6 @@
 Name:           ub-pkg-manager
 Version:        0.0.4
-Release:        4
+Release:        5
 Summary:        The full function of UB OS Component
 
 License:        mulan
@@ -245,6 +245,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Mon Mar 23 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-5
+- Optimize the prompt messages for both EFI and BIOS situations
 * Fri Mar 21 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-4
 - Improve command prompts and fix file-saving error
 * Tues Mar 10 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-3
