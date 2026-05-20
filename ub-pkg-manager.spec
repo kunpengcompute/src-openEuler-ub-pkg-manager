@@ -1,6 +1,6 @@
 Name:           ub-pkg-manager
-Version:        0.0.4
-Release:        7
+Version:        1.0.0
+Release:        1
 Summary:        The full function of UB OS Component
 
 License:        MulanPSL2
@@ -267,6 +267,10 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Wed May 20 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-1
+- Refactored KO loading to enforce a common-first-then-specific module
+- order across categories, treating missing modules as non-fatal warnings
+- while failing the service on actual load errors.
 * Tues May 19 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-7
 - Container scenario detection and service management
 * Mon Mar 23 2026 gongzhengtang <gong_zhengtang@163.com> - 0.0.4-5
