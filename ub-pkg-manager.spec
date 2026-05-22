@@ -1,6 +1,6 @@
 Name:           ub-pkg-manager
 Version:        1.0.0
-Release:        1
+Release:        2
 Summary:        The full function of UB OS Component
 
 License:        MulanPSL2
@@ -31,7 +31,7 @@ user-space software packages.
 # Subpackage: ub-pkg-mem
 %package -n ub-pkg-mem
 Summary:        The UnifiedBus Pooled Memory function software package management tool of UB OS Component
-Requires:       sysSentry libobmm ubctl ubutils libummu libcdma
+Requires:       sysSentry obmm ubctl ubutils libummu libcdma
 
 %description -n ub-pkg-mem
 UnifiedBus Pooled Memory function software package management tool, which 
@@ -267,6 +267,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Fri May 22 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-2
+- The dependency of component ub-pkg-mem has been changed from libobmm to obmm.
 * Wed May 20 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-1
 - Refactored KO loading to enforce a common-first-then-specific module
 - order across categories, treating missing modules as non-fatal warnings
