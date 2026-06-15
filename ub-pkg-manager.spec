@@ -1,11 +1,12 @@
 Name:           ub-pkg-manager
 Version:        1.0.0
-Release:        2
+Release:        3
 Summary:        The full function of UB OS Component
 
 License:        MulanPSL2
 Source0:        %{name}-%{version}.tar.gz
 
+Patch0001: 0001-update-libobmm-to-obmm.patch
 ExclusiveArch:  aarch64
 BuildRequires:  python3-setuptools
 Recommends:       python3 >= 3.6 python3-rich python3-pyyaml
@@ -58,6 +59,7 @@ EOF
 
 %prep
 %setup -q
+%patch -P 1 -p1
 
 %build
 %py3_build
@@ -267,6 +269,8 @@ fi
 /usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
 
 %changelog
+* Mon Jun 15 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-3
+- libobmm has been updated to obmm
 * Fri May 22 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-2
 - The dependency of component ub-pkg-mem has been changed from libobmm to obmm.
 * Wed May 20 2026 gongzhengtang <gong_zhengtang@163.com> - 1.0.0-1
