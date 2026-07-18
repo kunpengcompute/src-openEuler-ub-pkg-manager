@@ -1,0 +1,25 @@
+From fe555e0b595a358c0ddd1445d7c568bf1404a4af Mon Sep 17 00:00:00 2001
+From: gongzt <gong_zhengtang@163.com>
+Date: Mon, 15 Jun 2026 09:19:57 +0800
+Subject: [PATCH] libobmm has been updated to obmm
+
+---
+ src/ub_manage/cli/commands/check.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ub_manage/cli/commands/check.py b/src/ub_manage/cli/commands/check.py
+index 2e53709..1b717d0 100644
+--- a/src/ub_manage/cli/commands/check.py
++++ b/src/ub_manage/cli/commands/check.py
+@@ -42,7 +42,7 @@ class CheckCommand(BaseCommand):
+         "umdk-urpc-umq-devel",
+         "umdk-urpc-umq-tools",
+         "sysSentry",
+-        "libobmm",
++        "obmm",
+         "qemu",
+         "libvirt",
+         "memlinkd",
+-- 
+GitCode
+
