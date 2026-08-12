@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+is_not_container() {
+    ! grep -qE "docker|lxc|podman|kubepods" /proc/1/cgroup 2>/dev/null
+}
+
+#DEBHELPER#
+
+case "$1" in
+    remove|upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        # Reload systemd on upgrade or remove if not in container
+        if [ "$1" = "remove" ] || [ "$1" = "upgrade" ]; then
+            if is_not_container; then
+                if [ -d /run/systemd/system ]; then
+                    systemctl daemon-reload >/dev/null 2>&1 || true
+                fi
+            fi
+        fi
+    ;;
+
+    purge)
+    ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

@@ -1,0 +1,31 @@
+#!/bin/sh
+set -e
+
+is_not_container() {
+    ! grep -qE "docker|lxc|podman|kubepods" /proc/1/cgroup 2>/dev/null
+}
+
+#DEBHELPER#
+
+case "$1" in
+    configure)
+        # Reload, enable and start service if not in container
+        if is_not_container; then
+            if [ -d /run/systemd/system ]; then
+                systemctl daemon-reload >/dev/null 2>&1 || true
+                systemctl enable ub-pkg-virt.service >/dev/null 2>&1 || true
+                systemctl start ub-pkg-virt.service >/dev/null 2>&1 || true
+            fi
+        fi
+    ;;
+
+    abort-upgrade|abort-remove|abort-deconfigure)
+    ;;
+
+    *)
+        echo "postinst called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0

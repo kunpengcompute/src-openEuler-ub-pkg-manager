@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+is_not_container() {
+    ! grep -qE "docker|lxc|podman|kubepods" /proc/1/cgroup 2>/dev/null
+}
+
+#DEBHELPER#
+
+case "$1" in
+    remove|deconfigure)
+        # Stop and disable service if not in container
+        if is_not_container; then
+            if [ -d /run/systemd/system ]; then
+                systemctl stop ub-pkg-manager.service >/dev/null 2>&1 || true
+                systemctl disable ub-pkg-manager.service >/dev/null 2>&1 || true
+            fi
+        fi
+    ;;
+
+    upgrade|failed-upgrade)
+    ;;
+
+    *)
+        echo "prerm called with unknown argument \`$1'" >&2
+        exit 1
+    ;;
+esac
+
+exit 0
