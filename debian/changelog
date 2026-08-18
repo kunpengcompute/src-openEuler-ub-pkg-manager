@@ -1,0 +1,19 @@
+ub-pkg-manager (1.0.0-3) unstable; urgency=medium
+
+  * libobmm has been updated to obmm
+
+ -- gongzhengtang <gong_zhengtang@163.com>  Mon, 15 Jun 2026 09:19:57 +0800
+
+ub-pkg-manager (1.0.0-2) unstable; urgency=medium
+
+  * Changed the dependency of ub-pkg-mem from libobmm to obmm
+
+ -- gongzhengtang <gong_zhengtang@163.com>  Thu, 22 May 2026 10:00:00 +0800
+
+ub-pkg-manager (1.0.0-1) unstable; urgency=medium
+
+  * Refactored KO loading to enforce a common-first-then-specific module
+    order across categories, treating missing modules as non-fatal warnings
+    while failing the service on actual load errors
+
+ -- gongzhengtang <gong_zhengtang@163.com>  Wed, 20 May 2026 10:00:00 +0800

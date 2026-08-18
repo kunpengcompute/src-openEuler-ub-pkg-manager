@@ -1,0 +1,3 @@
+usr/lib/systemd/system/ub-pkg-virt.service
+usr/share/ub-pkg-manager/bin/ub-pkg-common.sh
+usr/share/ub-pkg-manager/bin/03-ub-pkg-virt.sh

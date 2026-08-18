@@ -1,0 +1,79 @@
+Source: ub-pkg-manager
+Section: admin
+Priority: optional
+Maintainer: gongzhengtang <gong_zhengtang@163.com>
+Build-Depends: debhelper-compat (= 13),
+               dh-python,
+               python3-all,
+               python3-setuptools
+Standards-Version: 4.6.2
+Homepage: https://gitcode.com/openeuler/ub-pkg-manager
+Rules-Requires-Root: no
+
+Package: ub-pkg-manager
+Architecture: arm64
+Depends: ${python3:Depends},
+         ${misc:Depends},
+         systemd,
+         python3 (>= 3.6),
+         python3-rich,
+         python3-yaml,
+         ub-pkg-urma (= ${binary:Version}),
+         ub-pkg-mem (= ${binary:Version}),
+         ub-pkg-virt (= ${binary:Version})
+Description: Full function of UB OS Component
+ A user-space tool for deploying and configuring UB OS Component.
+ .
+ This is the main package that provides the core management functionality
+ and command-line interface for UB OS components.
+
+Package: ub-pkg-urma
+Architecture: arm64
+Depends: ${misc:Depends},
+         systemd,
+         ubctl,
+         ubutils,
+         libummu,
+         libcdma,
+         umdk-urma-lib,
+         umdk-urma-bin,
+         umdk-urpc-umq,
+         umdk-urma-tools,
+         umdk-dlock-lib,
+         umdk-urpc-framework,
+         umdk-urpc-framework-tools,
+         umdk-urpc-umq-devel,
+         umdk-urpc-umq-tools
+Description: UnifiedBus Communication function software package management tool
+ UnifiedBus Communication function software package management tool, which
+ includes loading the kernel drivers required for communication and installing
+ user-space software packages.
+
+Package: ub-pkg-mem
+Architecture: arm64
+Depends: ${misc:Depends},
+         systemd,
+         syssentry,
+         obmm,
+         ubctl,
+         ubutils,
+         libummu,
+         libcdma
+Description: UnifiedBus Pooled Memory function software package management tool
+ UnifiedBus Pooled Memory function software package management tool, which
+ includes loading the kernel drivers required for pooled memory and installing
+ user-space software packages.
+
+Package: ub-pkg-virt
+Architecture: arm64
+Depends: ${misc:Depends},
+         systemd,
+         ub-pkg-urma (= ${binary:Version}),
+         qemu,
+         libvirt,
+         memlinkd,
+         edk2-aarch64
+Description: UnifiedBus Device Virtualization function management tool
+ UnifiedBus Device Virtualization function software package management tool,
+ which includes loading the kernel drivers required for device virtualization
+ and installing user-space software packages.
