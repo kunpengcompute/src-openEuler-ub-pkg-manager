@@ -3,35 +3,20 @@
 export DH_VERBOSE = 1
 export DEB_BUILD_MAINT_OPTIONS = hardening=+all
 export DEB_BUILD_OPTIONS = nocheck
+export PYBUILD_NAME = ub_manage
+export PYBUILD_SYSTEM = distutils
 
 %:
-	dh $@
-
-override_dh_auto_clean:
-	rm -rf ub-pkg-manager-1.0.0
-	rm -rf build *.egg-info
-
-override_dh_auto_configure:
-	# Extract source tarball if not already extracted
-	if [ ! -d ub-pkg-manager-1.0.0 ]; then \
-		tar -xzf ub-pkg-manager-1.0.0.tar.gz; \
-	fi
-
-override_dh_auto_build:
-	# Apply patches
-	cd ub-pkg-manager-1.0.0 && \
-		if [ ! -f .patch_applied ]; then \
-			patch -p1 < ../0001-update-libobmm-to-obmm.patch && \
-			touch .patch_applied; \
-		fi
-	# Build Python package
-	cd ub-pkg-manager-1.0.0 && \
-		python3 setup.py build
+	dh $@ --with python3 --buildsystem=pybuild
 
 override_dh_auto_install:
-	# Install Python package
-	cd ub-pkg-manager-1.0.0 && \
-		python3 setup.py install --root=$(CURDIR)/debian/tmp --install-layout=deb
+	dh_auto_install
+
+	# Copy pybuild output to debian/tmp for consistent install file handling
+	mkdir -p debian/tmp
+	if [ -d debian/python3-ub-manage ]; then \
+		cp -a debian/python3-ub-manage/* debian/tmp/ ; \
+	fi
 
 	# Remove __pycache__ directories
 	find $(CURDIR)/debian/tmp -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
@@ -43,24 +28,24 @@ override_dh_auto_install:
 	mkdir -p debian/tmp/usr/share/ub-pkg-manager
 
 	# Install systemd service files
-	install -m 644 ub-pkg-manager-1.0.0/ub-pkg-manager.service debian/tmp/usr/lib/systemd/system/
-	install -m 644 ub-pkg-manager-1.0.0/ub-pkg-urma.service debian/tmp/usr/lib/systemd/system/
-	install -m 644 ub-pkg-manager-1.0.0/ub-pkg-mem.service debian/tmp/usr/lib/systemd/system/
-	install -m 644 ub-pkg-manager-1.0.0/ub-pkg-virt.service debian/tmp/usr/lib/systemd/system/
+	install -m 644 ub-pkg-manager.service debian/tmp/usr/lib/systemd/system/
+	install -m 644 ub-pkg-urma.service debian/tmp/usr/lib/systemd/system/
+	install -m 644 ub-pkg-mem.service debian/tmp/usr/lib/systemd/system/
+	install -m 644 ub-pkg-virt.service debian/tmp/usr/lib/systemd/system/
 
 	# Install configuration files
-	install -m 644 ub-pkg-manager-1.0.0/src/ub_manage/etc/check.yml debian/tmp/etc/ub-pkg-manager/
+	install -m 644 src/ub_manage/etc/check.yml debian/tmp/etc/ub-pkg-manager/
 
 	# Install scripts
-	install -m 755 ub-pkg-manager-1.0.0/src/ub_manage/scripts/ub-pkg-common.sh debian/tmp/usr/share/ub-pkg-manager/bin/
-	install -m 755 ub-pkg-manager-1.0.0/src/ub_manage/scripts/00-ub-pkg-manager.sh debian/tmp/usr/share/ub-pkg-manager/bin/
-	install -m 755 ub-pkg-manager-1.0.0/src/ub_manage/scripts/01-ub-pkg-urma.sh debian/tmp/usr/share/ub-pkg-manager/bin/
-	install -m 755 ub-pkg-manager-1.0.0/src/ub_manage/scripts/02-ub-pkg-mem.sh debian/tmp/usr/share/ub-pkg-manager/bin/
-	install -m 755 ub-pkg-manager-1.0.0/src/ub_manage/scripts/03-ub-pkg-virt.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/ub-pkg-common.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/00-ub-pkg-manager.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/01-ub-pkg-urma.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/02-ub-pkg-mem.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/03-ub-pkg-virt.sh debian/tmp/usr/share/ub-pkg-manager/bin/
 
 	# Install testkit
 	mkdir -p debian/tmp/usr/share/ub-pkg-manager/bin/testkit
-	cp -r ub-pkg-manager-1.0.0/src/ub_manage/scripts/testkit/* debian/tmp/usr/share/ub-pkg-manager/bin/testkit/
+	cp -r src/ub_manage/scripts/testkit/* debian/tmp/usr/share/ub-pkg-manager/bin/testkit/
 	# Fix permissions - remove execute bit from C source files
 	find debian/tmp/usr/share/ub-pkg-manager/bin/testkit -name "*.c" -exec chmod 644 {} +
 	find debian/tmp/usr/share/ub-pkg-manager/bin/testkit -name "*.sh" -exec chmod 755 {} +

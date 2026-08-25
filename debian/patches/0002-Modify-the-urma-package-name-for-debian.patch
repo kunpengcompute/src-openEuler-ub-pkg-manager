@@ -1,0 +1,26 @@
+From a0288618dd5f8bfa1d39e7ddbfb3881f3dc4de54 Mon Sep 17 00:00:00 2001
+From: slim6882 <yangjunshuo@huawei.com>
+Date: Tue, 25 Aug 2026 19:31:48 +0800
+Subject: [PATCH 1/1] Modify the urma package name for debian
+
+Signed-off-by: slim6882 <yangjunshuo@huawei.com>
+---
+ src/ub_manage/cli/commands/check.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/ub_manage/cli/commands/check.py b/src/ub_manage/cli/commands/check.py
+index 1b717d0..ddd3dab 100644
+--- a/src/ub_manage/cli/commands/check.py
++++ b/src/ub_manage/cli/commands/check.py
+@@ -39,7 +39,7 @@ class CheckCommand(BaseCommand):
+         "umdk-dlock-lib",
+         "umdk-urpc-framework",
+         "umdk-urpc-framework-tools",
+-        "umdk-urpc-umq-devel",
++        "umdk-urpc-umq-dev",
+         "umdk-urpc-umq-tools",
+         "sysSentry",
+         "obmm",
+-- 
+2.43.0
+

@@ -1,3 +1,0 @@
-version=4
-opts=filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/ub-pkg-manager-$1\.tar\.gz/ \
-  https://gitcode.com/openeuler/ub-pkg-manager/tags .*/v?(\d\S+)\.tar\.gz
