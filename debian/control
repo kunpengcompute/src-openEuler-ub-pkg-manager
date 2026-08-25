@@ -42,7 +42,7 @@ Depends: ${misc:Depends},
          umdk-dlock-lib,
          umdk-urpc-framework,
          umdk-urpc-framework-tools,
-         umdk-urpc-umq-devel,
+         umdk-urpc-umq-dev,
          umdk-urpc-umq-tools
 Description: UnifiedBus Communication function software package management tool
  UnifiedBus Communication function software package management tool, which
