@@ -1,3 +1,2 @@
 usr/lib/systemd/system/ub-pkg-urma.service
-usr/share/ub-pkg-manager/bin/ub-pkg-common.sh
 usr/share/ub-pkg-manager/bin/01-ub-pkg-urma.sh

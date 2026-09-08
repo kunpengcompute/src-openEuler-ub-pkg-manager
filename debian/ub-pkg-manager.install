@@ -3,6 +3,5 @@ usr/lib/python3*/dist-packages/ub_pkg_manager-*.egg-info/
 usr/bin/ub-pkg-cli
 usr/lib/systemd/system/ub-pkg-manager.service
 etc/ub-pkg-manager/check.yml
-usr/share/ub-pkg-manager/bin/00-ub-pkg-manager.sh
-usr/share/ub-pkg-manager/bin/ub-pkg-common.sh
+usr/share/ub-pkg-manager/bin/04-ub-pkg-manager.sh
 usr/share/ub-pkg-manager/bin/testkit/
