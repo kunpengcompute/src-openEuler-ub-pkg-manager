@@ -37,11 +37,11 @@ override_dh_auto_install:
 	install -m 644 src/ub_manage/etc/check.yml debian/tmp/etc/ub-pkg-manager/
 
 	# Install scripts
-	install -m 755 src/ub_manage/scripts/ub-pkg-common.sh debian/tmp/usr/share/ub-pkg-manager/bin/
-	install -m 755 src/ub_manage/scripts/00-ub-pkg-manager.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/00-ub-pkg-devm.sh debian/tmp/usr/share/ub-pkg-manager/bin/
 	install -m 755 src/ub_manage/scripts/01-ub-pkg-urma.sh debian/tmp/usr/share/ub-pkg-manager/bin/
 	install -m 755 src/ub_manage/scripts/02-ub-pkg-mem.sh debian/tmp/usr/share/ub-pkg-manager/bin/
 	install -m 755 src/ub_manage/scripts/03-ub-pkg-virt.sh debian/tmp/usr/share/ub-pkg-manager/bin/
+	install -m 755 src/ub_manage/scripts/04-ub-pkg-manager.sh debian/tmp/usr/share/ub-pkg-manager/bin/
 
 	# Install testkit
 	mkdir -p debian/tmp/usr/share/ub-pkg-manager/bin/testkit
