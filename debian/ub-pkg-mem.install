@@ -1,3 +1,2 @@
 usr/lib/systemd/system/ub-pkg-mem.service
-usr/share/ub-pkg-manager/bin/ub-pkg-common.sh
 usr/share/ub-pkg-manager/bin/02-ub-pkg-mem.sh

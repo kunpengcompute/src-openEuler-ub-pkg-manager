@@ -10,6 +10,15 @@ Standards-Version: 4.6.2
 Homepage: https://gitcode.com/openeuler/ub-pkg-manager
 Rules-Requires-Root: no
 
+Package: ub-pkg-devm
+Architecture: arm64
+Depends: ${misc:Depends},
+         systemd
+Description: UnifiedBus common device management library
+ Common library and scripts shared by all UB OS component packages.
+ This package provides the base functionality required by ub-pkg-manager,
+ ub-pkg-urma, ub-pkg-mem, and ub-pkg-virt.
+
 Package: ub-pkg-manager
 Architecture: arm64
 Depends: ${python3:Depends},
@@ -18,6 +27,7 @@ Depends: ${python3:Depends},
          python3 (>= 3.6),
          python3-rich,
          python3-yaml,
+         ub-pkg-devm (= ${binary:Version}),
          ub-pkg-urma (= ${binary:Version}),
          ub-pkg-mem (= ${binary:Version}),
          ub-pkg-virt (= ${binary:Version})
@@ -31,6 +41,7 @@ Package: ub-pkg-urma
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          ubctl,
          ubutils,
          libummu,
@@ -53,6 +64,7 @@ Package: ub-pkg-mem
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          syssentry,
          obmm,
          ubctl,
@@ -68,6 +80,7 @@ Package: ub-pkg-virt
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          ub-pkg-urma (= ${binary:Version}),
          qemu,
          libvirt,
