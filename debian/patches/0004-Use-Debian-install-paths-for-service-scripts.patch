@@ -1,0 +1,100 @@
+Description: Use Debian install paths for service and test scripts
+ The package installs executable scripts below /usr/share/ub-pkg-manager,
+ so systemd units and test commands must not refer to /usr/local.
+Author: zhangxinghao <zhangxinghao@kunlunit.com>
+Forwarded: no
+Last-Update: 2026-09-20
+
+Index: src-openEuler-ub-pkg-manager/ub-pkg-manager.service
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/ub-pkg-manager.service
++++ src-openEuler-ub-pkg-manager/ub-pkg-manager.service
+@@ -5,7 +5,7 @@ Requires=ub-pkg-urma.service ub-pkg-mem.
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=/usr/local/ub-pkg-manager/bin/00-ub-pkg-manager.sh
++ExecStart=/usr/share/ub-pkg-manager/bin/04-ub-pkg-manager.sh
+ StandardOutput=journal
+ StandardError=journal
+ RemainAfterExit=yes
+Index: src-openEuler-ub-pkg-manager/ub-pkg-urma.service
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/ub-pkg-urma.service
++++ src-openEuler-ub-pkg-manager/ub-pkg-urma.service
+@@ -6,7 +6,7 @@ Before=multi-user.target
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=/usr/local/ub-pkg-manager/bin/01-ub-pkg-urma.sh
++ExecStart=/usr/share/ub-pkg-manager/bin/01-ub-pkg-urma.sh
+ StandardOutput=journal
+ StandardError=journal
+ RemainAfterExit=yes
+Index: src-openEuler-ub-pkg-manager/ub-pkg-mem.service
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/ub-pkg-mem.service
++++ src-openEuler-ub-pkg-manager/ub-pkg-mem.service
+@@ -5,7 +5,7 @@ Requires=ub-pkg-urma.service
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=/usr/local/ub-pkg-manager/bin/02-ub-pkg-mem.sh
++ExecStart=/usr/share/ub-pkg-manager/bin/02-ub-pkg-mem.sh
+ StandardOutput=journal
+ StandardError=journal
+ RemainAfterExit=yes
+Index: src-openEuler-ub-pkg-manager/ub-pkg-virt.service
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/ub-pkg-virt.service
++++ src-openEuler-ub-pkg-manager/ub-pkg-virt.service
+@@ -5,7 +5,7 @@ Requires=ub-pkg-urma.service
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=/usr/local/ub-pkg-manager/bin/03-ub-pkg-virt.sh
++ExecStart=/usr/share/ub-pkg-manager/bin/03-ub-pkg-virt.sh
+ StandardOutput=journal
+ StandardError=journal
+ RemainAfterExit=yes
+Index: src-openEuler-ub-pkg-manager/src/ub_manage/etc/check.yml
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/src/ub_manage/etc/check.yml
++++ src-openEuler-ub-pkg-manager/src/ub_manage/etc/check.yml
+@@ -7,5 +7,5 @@ test_kit:
+     result: bytes\s+iterations\s+t_min\[us\]\s+t_max\[us\]
+   - name: mem-pool-test
+     enable: true
+-    cmd: bash /usr/local/ub-pkg-manager/bin/testkit/mem_pool/test.sh
++    cmd: bash /usr/share/ub-pkg-manager/bin/testkit/mem_pool/test.sh
+     result:
+Index: src-openEuler-ub-pkg-manager/src/ub_manage/scripts/testkit/mem_pool/test.sh
+===================================================================
+--- src-openEuler-ub-pkg-manager.orig/src/ub_manage/scripts/testkit/mem_pool/test.sh
++++ src-openEuler-ub-pkg-manager/src/ub_manage/scripts/testkit/mem_pool/test.sh
+@@ -1,8 +1,8 @@
+ #!/bin/bash
+ 
+ yum install -y gcc
+-gcc /usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_export.c -o /usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_export -lobmm
+-gcc /usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_unexport.c -o /usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_unexport -lobmm
++gcc /usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_export.c -o /usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_export -lobmm
++gcc /usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_unexport.c -o /usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_unexport -lobmm
+ 
+ export_mem=${1:-"128"}
+ 
+@@ -14,12 +14,12 @@ SYS_SHMDEV='/sys/devices/obmm/obmm_shmde
+ ECNA=$(cat ${CNA_PATH})
+ DEID=$(cat ${EID_PATH})
+ 
+-/usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_export $((export_mem * MB2B)) 1 $DEID &> export.log || exit 1
++/usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_export $((export_mem * MB2B)) 1 $DEID &> export.log || exit 1
+ cat export.log
+ 
+ mem_id=$(grep -oP 'mem_id=\K\d+' export.log | head -1)
+ if [ -n "$mem_id" ]; then
+-	/usr/local/ub-pkg-manager/bin/testkit/mem_pool/test_unexport "$mem_id" || exit 1
++	/usr/share/ub-pkg-manager/bin/testkit/mem_pool/test_unexport "$mem_id" || exit 1
+ else
+ 	echo "ERROR: failed to found mem_id"
+ 	exit 1

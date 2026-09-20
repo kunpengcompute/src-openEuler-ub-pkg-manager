@@ -82,10 +82,10 @@ Depends: ${misc:Depends},
          systemd,
          ub-pkg-devm (= ${binary:Version}),
          ub-pkg-urma (= ${binary:Version}),
-         qemu,
-         libvirt,
+         qemu-system-arm,
+         libvirt-daemon-system,
          memlinkd,
-         edk2-aarch64
+         qemu-efi-aarch64
 Description: UnifiedBus Device Virtualization function management tool
  UnifiedBus Device Virtualization function software package management tool,
  which includes loading the kernel drivers required for device virtualization
