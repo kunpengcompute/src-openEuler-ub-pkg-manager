@@ -2,20 +2,6 @@
 
 LOG_FILE="/var/log/ub-pkg-manager.log"
 LOG_LEVEL="INFO"
-DEVICE_MGMT_MODULES=(
-    "ubfi"
-    "ubus"
-    "ummu-core"
-    "ummu"
-    "ummu-pmu"
-    "hisi_ubus"
-    "odf"
-    "cis"
-    "ub_fwctl"
-    "ubase"
-    "cdma"
-    "ubdevshm"
-)
 
 ensure_log_dir() {
     local log_dir="$1"
@@ -94,11 +80,6 @@ modprobe_sys_ko() {
     ko=($@)
     
     for mod in "${ko[@]}"; do
-        if ! modprobe --show "$mod" >/dev/null 2>&1; then
-            log WARN "Module $mod not found, skipping"
-            continue
-        fi
-
         if ! module_is_loaded "$mod"; then
             if ! run_modprobe "$mod"; then
                 log ERROR "Failed to load module $mod, aborting"
@@ -120,15 +101,6 @@ check_ubrt_support() {
     fi
 }
 
-check_container(){
-    if grep -qE "docker|lxc|podman|kubepods" /proc/1/cgroup 2>/dev/null; then
-        log ERROR "The current system is running in a container, no need to load UB KO modules."
-        exit 1
-    fi
-}
-
-
 ensure_log_dir
-check_container
 check_ubrt_support
 
