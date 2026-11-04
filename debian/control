@@ -15,6 +15,7 @@ Architecture: arm64
 Depends: ${python3:Depends},
          ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          python3 (>= 3.6),
          python3-rich,
          python3-yaml,
@@ -31,6 +32,7 @@ Package: ub-pkg-urma
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          ubctl,
          ubutils,
          libummu,
@@ -53,6 +55,7 @@ Package: ub-pkg-mem
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          syssentry,
          obmm,
          ubctl,
@@ -68,6 +71,7 @@ Package: ub-pkg-virt
 Architecture: arm64
 Depends: ${misc:Depends},
          systemd,
+         ub-pkg-devm (= ${binary:Version}),
          ub-pkg-urma (= ${binary:Version}),
          qemu-system-arm,
          libvirt-daemon-system,
@@ -77,3 +81,11 @@ Description: UnifiedBus Device Virtualization function management tool
  UnifiedBus Device Virtualization function software package management tool,
  which includes loading the kernel drivers required for device virtualization
  and installing user-space software packages.
+
+Package: ub-pkg-devm
+Architecture: arm64
+Depends: ${misc:Depends},
+         systemd
+Description: UnifiedBus device management base scripts
+ Common shell library and device-management helpers shared by the
+ ub-pkg-manager family of packages.

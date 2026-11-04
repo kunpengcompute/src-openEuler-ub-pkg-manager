@@ -1,3 +1,3 @@
 #!/bin/bash
-source /usr/share/ub-pkg-manager/bin/ub-pkg-common.sh
+source /usr/local/ub-pkg-manager/bin/ub-pkg-common.sh
 

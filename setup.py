@@ -14,14 +14,14 @@ def get_etc_files():
 
 setup(
     name='ub-pkg-manager',
-    version='0.0.4',
+    version='1.0.0',
     description='UB OS Component',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     package_data={
         'ub_manage': get_etc_files(),
     },
-    install_requires=['pyyaml>=6.0', "pydantic", "rich"],
+    install_requires=['pyyaml>=6.0', "rich"],
     entry_points={
         'console_scripts': [
             'ub-pkg-cli = ub_manage.__main__:ub_cli',
