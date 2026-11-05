@@ -1,3 +1,9 @@
+ub-pkg-manager (1.0.0-4) UNRELEASED; urgency=medium
+
+ * Mark changelog entries as UNRELEASED
+
+ -- qiushengming <qiushengming1@huawei.com>  Thu, 5 Nov 2026 16:20:01 +0800
+
 ub-pkg-manager (1.0.0-3) UNRELEASED; urgency=medium
 
   * libobmm has been updated to obmm
