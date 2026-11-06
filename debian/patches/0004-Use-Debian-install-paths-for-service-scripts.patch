@@ -14,7 +14,7 @@ Index: src-openEuler-ub-pkg-manager/ub-pkg-manager.service
  [Service]
  Type=oneshot
 -ExecStart=/usr/local/ub-pkg-manager/bin/00-ub-pkg-manager.sh
-+ExecStart=/usr/share/ub-pkg-manager/bin/00-ub-pkg-manager.sh
++ExecStart=/usr/share/ub-pkg-manager/bin/04-ub-pkg-manager.sh
  StandardOutput=journal
  StandardError=journal
  RemainAfterExit=yes
