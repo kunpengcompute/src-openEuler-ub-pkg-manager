@@ -35,7 +35,6 @@ override_dh_auto_install:
 
 	# Install configuration files
 	install -m 644 src/ub_manage/etc/check.yml debian/tmp/etc/ub-pkg-manager/
-	install -m 644 src/ub_manage/etc/ko.yml debian/tmp/etc/ub-pkg-manager/
 
 	# Install scripts
 	install -m 755 src/ub_manage/scripts/01-ub-pkg-urma.sh debian/tmp/usr/share/ub-pkg-manager/bin/
