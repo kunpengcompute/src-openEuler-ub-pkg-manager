@@ -1,4 +1,4 @@
-ub-pkg-manager (1.0.0-4) unstable; urgency=medium
+ub-pkg-manager (1.0.1-1) unstable; urgency=medium
 
   * 930 snapshot (openEuler-24.03-LTS-SP3-update-20260327) packaged as deb.
   * Version aligned with 930 spec.
