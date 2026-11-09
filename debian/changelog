@@ -1,3 +1,10 @@
+ub-pkg-manager (1.0.1-1) unstable; urgency=medium
+
+  * 930 snapshot (openEuler-24.03-LTS-SP3-update-20260327) packaged as deb.
+  * Version aligned with 930 spec.
+
+ -- chen_sz <chen_sz@gitcode.com>  Tue, 03 Nov 2026 19:31:43 +0800
+
 ub-pkg-manager (1.0.0-3) unstable; urgency=medium
 
   * libobmm has been updated to obmm
