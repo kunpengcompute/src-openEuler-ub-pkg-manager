@@ -45,7 +45,6 @@ Depends: ${misc:Depends},
          ubctl,
          ubutils,
          libummu,
-         libcdma,
          umdk-urma-lib,
          umdk-urma-bin,
          umdk-urpc-umq,
@@ -69,8 +68,7 @@ Depends: ${misc:Depends},
          obmm,
          ubctl,
          ubutils,
-         libummu,
-         libcdma
+         libummu
 Description: UnifiedBus Pooled Memory function software package management tool
  UnifiedBus Pooled Memory function software package management tool, which
  includes loading the kernel drivers required for pooled memory and installing
